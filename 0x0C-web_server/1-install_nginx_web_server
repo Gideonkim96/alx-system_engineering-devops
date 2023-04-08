@@ -1,23 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Install nginx on web server; Nginx should be listening on port 80
+# Querying Nginx at its root (/) with a GET request (requesting a page)
+#    curl http://52.91.161.1/   --> returns string "Hello World!"
+#   curl http://52.91.161.1/   --> returns header info
 
-# Update package lists
-sudo apt-get update
-
-# Install Nginx
-sudo apt-get install -y nginx
-
-# Create a backup of the default Nginx configuration file
-sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
-
-# Replace the default Nginx configuration file with our custom one
-sudo cat << EOF > /etc/nginx/sites-available/default
-server {
-    listen 80;
-    location / {
-        return 200 "Hello World!";
-    }
-}
-EOF
-
-# Restart Nginx
-sudo /etc/init.d/nginx restart
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y install nginx
+service start nginx
+sudo sh -c 'echo "Hello World!" > /var/www/html/index.html'
+sudo rm /var/www/html/index.nginx-debian.html
